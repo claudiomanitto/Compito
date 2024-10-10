@@ -12,6 +12,8 @@
             width: 200px;
             border: 10px solid black;
             background-color: white;
+            align-items: center;
+            justify-content: center;
         }
 
         #ClaudioBody {
@@ -19,6 +21,8 @@
             width: 200px;
             border: 10px solid black;
             background-color: white;
+            align-items: center;
+            justify-content: center;
         }
 
         #ClaudioArms {
@@ -26,6 +30,8 @@
             width: 200px;
             border: 10px solid black;
             background-color: white;
+            align-items: center;
+            justify-content: center;
         }
 
         #ClaudioFooter {
@@ -33,6 +39,8 @@
             width: 200px;
             border: 10px solid black;
             background-color: white;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -41,16 +49,6 @@
     <h1>La mia prima pagina JavaScript</h1>
 
     <div id="ClaudioHeader">
-
-        
-    <button onclick="stampa()">Avvia funzione</button>
-
-    <script>
-        function stampa() {
-            alert("test button + funzione");
-        }
-    </script>
-
         <p>Lezione sui CSS</p>
     </div>
 
@@ -68,11 +66,26 @@
 
     <p></p>
 
-    <button onclick="stampa()">Avvia funzione</button>
+   <button onclick="scriviHeader()">Scrivi in Header</button>
+    <button onclick="scriviBody()">Scrivi in Body</button>
+    <button onclick="scriviArms()">Scrivi in Arms</button>
+    <button onclick="scriviFooter()">Scrivi in Footer</button>
 
     <script>
-        function stampa() {
-            alert("test button + funzione");
+        function scriviHeader() {
+            document.getElementById("ClaudioHeader").innerHTML = "<p>Contenuto aggiornato in Header</p>";
+        }
+
+        function scriviBody() {
+            document.getElementById("ClaudioBody").innerHTML = "<p>Contenuto aggiornato in Body</p>";
+        }
+
+        function scriviArms() {
+            document.getElementById("ClaudioArms").innerHTML = "<p>Contenuto aggiornato in Arms</p>";
+        }
+
+        function scriviFooter() {
+            document.getElementById("ClaudioFooter").innerHTML = "<p>Contenuto aggiornato in Footer</p>";
         }
     </script>
 
