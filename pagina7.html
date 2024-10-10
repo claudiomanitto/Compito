@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        /* CSS per ciascun div */
+        .box {
+            height: 200px;
+            width: 200px;
+            border: 10px solid black;
+            background-color: white;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>La mia prima pagina JavaScript</h1>
+
+    <div id="ClaudioHeader" class="box">
+        <p>Lezione sui CSS</p>
+    </div>
+
+    <div id="ClaudioBody" class="box">
+        <p>All'interno di questo quadrato posso inserire sezione per input e output</p>
+    </div>
+
+    <div id="ClaudioArms" class="box">
+        <p>Questo è il terzo quadrato</p>
+    </div>
+
+    <div id="ClaudioFooter" class="box">
+        <p>All'interno di questo quadrato posso inserire sezione per input e output</p>
+    </div>
+
+    <input type="text" id="userInput" placeholder="Scrivi qui...">
+    
+    <button onclick="scriviHeader()">Scrivi in Header</button>
+    <button onclick="scriviBody()">Scrivi in Body</button>
+    <button onclick="scriviArms()">Scrivi in Arms</button>
+    <button onclick="scriviFooter()">Scrivi in Footer</button>
+
+    <script>
+        function scriviHeader() {
+            const input = document.getElementById("userInput").value;
+            document.getElementById("ClaudioHeader").innerHTML = "<p>" + input + "</p>";
+        }
+
+        function scriviBody() {
+            const input = document.getElementById("userInput").value;
+            document.getElementById("ClaudioBody").innerHTML = "<p>" + input + "</p>";
+        }
+
+        function scriviArms() {
+            const input = document.getElementById("userInput").value;
+            document.getElementById("ClaudioArms").innerHTML = "<p>" + input + "</p>";
+        }
+
+        function scriviFooter() {
+            const input = document.getElementById("userInput").value;
+            document.getElementById("ClaudioFooter").innerHTML = "<p>" + input + "</p>";
+        }
+    </script>
+
+</body>
+</html>
