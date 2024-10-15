@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #out1, #out2, #out3, #out4 {
+            height: 200px;
+            width: 200px;
+            border: 1px solid black;
+            margin: 20px;
+            padding: 15px;
+        }
+        #out1 { background-color: rgb(237, 237, 237); }
+        #out2 { background-color: rgb(255, 0, 0); }
+        #out3 { background-color: rgb(0, 102, 255); }
+        #out4 { background-color: rgb(33, 165, 0); }
+    </style>
+</head>
+<body>
+    <h1>La mia prima pagina JavaScript</h1>
+    <div id="out1"></div>
+    <div id="out2"></div>
+    <div id="out3"></div>
+    <div id="out4"></div>
+    <button onclick="stampa('out1', 'La misura di ciò che è misurabile, e rendi misurabile ciò che non lo è. <p> </p> -Galileo Galilei')">Avvia funzione 1</button>
+    <button onclick="stampa('out2', 'La scienza è il grande antidoto al veleno dell’entusiasmo e della superstizione. <p> </p> -Adam Smiths')">Avvia funzione 2</button>
+    <button onclick="stampa('out3', 'La realtà è solo un illusione, sebbene molto persistente. <p> </p> -Albert Einstein')">Avvia funzione 3</button>
+    <button onclick="stampa('out4', 'Non possiamo risolvere i nostri problemi con lo stesso modo di pensare che abbiamo usato per crearli. <p> </p> -Albert Einstein')">Avvia funzione 4</button>
+    <script>
+        function stampa(id, text) {
+            document.getElementById(id).innerHTML = text;
+        }
+    </script>
+</body>
+</html>
