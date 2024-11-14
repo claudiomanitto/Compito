@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js 5</title>
+    <style>
+        #p{
+            font-size: 20px;
+        }
+        #div{
+            text-align: center;
+            font-size: 300px;
+        }
+    </style>
+</head>
+<body>
+
+    <p id="p"></p>
+    <div id="div"></div>
+
+    <script>
+        let contatore = 11
+        let tim = setInterval(timer,1000);
+        function timer(){
+            contatore--;
+            document.getElementById("p").innerHTML = "attendere... " + contatore;
+            if(contatore==0){
+                p.style.display = "none";
+                clearInterval(tim);
+                let tempo = 0;
+                let crono = setInterval(cronometro,1000);
+                function cronometro(){
+                    tempo++;
+                    document.getElementById("div").innerHTML = tempo;
+                    if(tempo==10){
+                        clearInterval(crono);
+                    };
+                };
+            };
+        }
+
+    </script>
+
+    
+</body>
+</html>
