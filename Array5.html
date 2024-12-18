@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisi Numerica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .prime {
+            color: green;
+        }
+        .non-prime {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Analisi Numerica</h1>
+    <p>Numeri primi da 0 a 1000:</p>
+    <div id="primeNumbers" class="prime"></div>
+    <p>Numeri non primi da 0 a 1000 con fattori:</p>
+    <div id="nonPrimeNumbers" class="non-prime"></div>
+
+    <script>
+        function isPrime(n) {
+            if (n <= 1) return false;
+            for (let i = 2; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+
+        function getFactors(n) {
+            let factors = [];
+            for (let i = 1; i <= n / 2; i++) {
+                if (n % i === 0) {
+                    factors.push(i);
+                }
+            }
+            factors.push(n); // Include the number itself
+            return factors;
+        }
+
+        function analyzeNumbers() {
+            let primeNumbers = [];
+            let nonPrimeNumbers = [];
+
+            for (let i = 0; i <= 1000; i++) {
+                if (isPrime(i)) {
+                    primeNumbers.push(i);
+                } else {
+                    let factors = getFactors(i);
+                    nonPrimeNumbers.push(`${i} (fattori: ${factors.join(', ')})`);
+                }
+            }
+
+            document.getElementById('primeNumbers').innerHTML = primeNumbers.join(', ');
+            document.getElementById('nonPrimeNumbers').innerHTML = nonPrimeNumbers.join('<br>');
+        }
+
+        analyzeNumbers();
+    </script>
+</body>
+</html>
