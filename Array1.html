@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array1</title>
+</head>
+<body>
+   
+<p>  ESEMPIO STAMPA DI ARRAY
+
+   </p>
+   <p>
+    Stampo 10 elementi casuali della morra
+   </p>
+   <p id="out1"></p>
+
+
+
+<script>
+
+        const arrymorra=["sasso","mano", "forbice"]
+
+
+
+        let tiro=-1;
+
+        for(let i=0;i<10;i++)
+        {
+        tiro=numeroCasuale()
+
+        document.getElementById("out1").innerHTML+=arrymorra[tiro] +" "
+        }
+        console.log(arrymorra)
+
+
+
+
+function numeroCasuale() {
+  return Math.floor(Math.random() * 3); // Restituisce un numero tra 0 e 2
+}
+
+
+
+</script>
+
+</body>
+</html>
