@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Giorni di Vita</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            padding: 20px;
+        }
+        input {
+            margin: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calcola quanto tempo sei in vita</h1>
+    <form id="lifeForm">
+        <label for="name">Nome:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        <label for="birthdate">Data di Nascita:</label><br>
+        <input type="date" id="birthdate" name="birthdate" required><br><br>
+        <input type="submit" value="Calcola">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('lifeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var name = prompt("Per favore, inserisci il tuo nome:", "");
+
+            if (name == null || name == "") {
+                document.getElementById('result').innerHTML = "Nome non inserito!";
+                return;
+            }
+
+            var birthdate = new Date(document.getElementById('birthdate').value);
+            var now = new Date();
+            var diff = now - birthdate;
+            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var hours = Math.floor(diff / (1000 * 60 * 60));
+            var seconds = Math.floor(diff / 1000);
+
+            document.getElementById('result').innerHTML = "Ciao " + name + "! Sei in vita da:<br>" +
+                days + " giorni<br>" +
+                hours + " ore<br>" +
+                seconds + " secondi";
+        });
+    </script>
+</body>
+</html>
