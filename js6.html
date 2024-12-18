@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+        }
+        #countdown {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown">100.00</div>
+    <button id="captureButton" >Capture Time</button>
+    <div id="result"></div>
+
+    <script>
+        var countdown = 100.00;
+        var countdownElement = document.getElementById('countdown');
+        var captureButton = document.getElementById('captureButton');
+        var resultElement = document.getElementById('result');
+        var differences = [];
+        var targetTimes = [90, 80, 70, 60, 50, 40, 30, 20, 10, 0];
+        var nextTargetIndex = 0;
+
+        function formatCountdown(num) {
+            return num.toFixed(2);
+        }
+
+        var interval = setInterval(function() {
+            countdown -= 0.01;
+            countdownElement.textContent = formatCountdown(countdown);
+   
+            if (nextTargetIndex < targetTimes.length && countdown <= targetTimes[nextTargetIndex]) {
+            }
+
+            if (countdown <= 0) {
+                clearInterval(interval);
+                countdownElement.textContent = "0.00";
+                displayTotalDifference();
+            }
+        }, 10);
+
+        captureButton.addEventListener('click', function() {
+            if (nextTargetIndex < targetTimes.length) {
+                var targetTime = targetTimes[nextTargetIndex];
+                var currentTime = parseFloat(countdown.toFixed(2));
+                var difference = (targetTime - currentTime).toFixed(2);
+                
+                differences.push(difference);
+                resultElement.innerHTML += "<p>Obiettivo: " + targetTime + ", Catturato: " + currentTime + ", Differenza: " + difference + "</p>";
+
+                nextTargetIndex++;
+
+            }
+        });
+
+        function displayTotalDifference() {
+            var totalDifference = differences.reduce(function(sum, diff) {
+                return sum + parseFloat(diff);
+            }, 0).toFixed(2);
+
+            resultElement.innerHTML += "<p><strong>Somma totale delle differenze: " + totalDifference + "</strong></p>";
+        }
+    </script>
+</body>
+</html>
