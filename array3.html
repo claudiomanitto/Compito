@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack della Spesa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px;
+            margin: 5px 0;
+            background-color: #f4f4f4;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Blackjack della Spesa</h1>
+    <ul id="mazzoGiocatore"></ul>
+    <ul id="mazzoBanco"></ul>
+
+    <div>
+        <button id="btnAggiungi" onclick="aggiungiNumeroCasualeGiocatore()">Aggiungi Numero al Giocatore</button>
+        <button onclick="calcolaPunteggio('giocatore')">Calcola Punteggio Giocatore</button>
+        <button onclick="fermati()">Fermati</button>
+    </div>
+
+    <script>
+        let mazzoGiocatore = [];
+        let mazzoBanco = [];
+        let giocoTerminato = false;
+        let puntata = 0;
+        let profitto = 0;
+        let storiaMani = [];
+
+        function inizializzaGioco() {
+            mazzoGiocatore = [];
+            mazzoBanco = [];
+            giocoTerminato = false;
+            document.getElementById("btnAggiungi").disabled = false;
+            let listaGiocatore = document.getElementById("mazzoGiocatore");
+            let listaBanco = document.getElementById("mazzoBanco");
+            listaGiocatore.innerHTML = "";
+            listaBanco.innerHTML = "";
+            puntata = parseFloat(prompt("Quanti soldi vuoi puntare?", "10"));
+            if (isNaN(puntata) || puntata <= 0) {
+                alert("Puntata non valida. Puntata impostata a 10.");
+                puntata = 10;
+            }
+        }
+
+        function aggiungiNumeroCasualeGiocatore() {
+            if (giocoTerminato) return;
+            
+            let numeroCasuale = Math.floor(Math.random() * 11) + 1;
+            mazzoGiocatore.push(numeroCasuale);
+            aggiornaLista('giocatore');
+
+            let punteggioGiocatore = mazzoGiocatore.reduce((a, b) => a + b, 0);
+            if (punteggioGiocatore > 21) {
+                alert("Hai pescato: " + numeroCasuale + " che ti ha fatto sballare.");
+                aggiornaLista('giocatore');
+                document.getElementById("btnAggiungi").disabled = true;
+                mostraManoBanco();
+                setTimeout(() => {
+                    alert("Hai sballato! Il banco vince.");
+                    storiaMani.push({ risultato: "Perdita", importo: puntata });
+                    profitto -= puntata;
+                    giocoTerminato = true;
+                    if (confirm("Vuoi giocare di nuovo?")) {
+                        inizializzaGioco();
+                    } else {
+                        alert("Il tuo profitto totale è: " + profitto);
+                    }
+                }, 1000);
+            }
+        }
+
+        function calcolaPunteggio(giocatore) {
+            let mazzo = giocatore === 'giocatore' ? mazzoGiocatore : mazzoBanco;
+            let punteggio = mazzo.reduce((a, b) => a + b, 0);
+            alert(`Il punteggio del ${giocatore} è: ` + punteggio);
+        }
+
+        function fermati() {
+            if (giocoTerminato) return;
+
+            let punteggioGiocatore = mazzoGiocatore.reduce((a, b) => a + b, 0);
+
+            if (punteggioGiocatore > 21) {
+                alert("Hai sballato! Il banco vince.");
+                return;
+            }
+
+            while (true) {
+                let punteggioBanco = mazzoBanco.reduce((a, b) => a + b, 0);
+
+                if (punteggioBanco >= 17) {
+                    break;
+                }
+
+                let numeroCasuale = Math.floor(Math.random() * 11) + 1;
+                mazzoBanco.push(numeroCasuale);
+                aggiornaLista('banco'); // Aggiorna la lista per mostrare il gioco del banco
+            }
+
+            aggiornaLista('banco');
+
+            let punteggioBanco = mazzoBanco.reduce((a, b) => a + b, 0);
+
+            setTimeout(() => {
+                if (punteggioBanco > 21 || punteggioGiocatore > punteggioBanco) {
+                    alert("Complimenti! Hai vinto. La tua vincita totale è: " + (puntata * 2));
+                    storiaMani.push({ risultato: "Vittoria", importo: puntata });
+                    profitto += puntata;
+                } else if (punteggioGiocatore === punteggioBanco) {
+                    alert("Pareggio!");
+                } else {
+                    alert("Il banco vince.");
+                    storiaMani.push({ risultato: "Perdita", importo: puntata });
+                    profitto -= puntata;
+                }
+                giocoTerminato = true;
+                if (confirm("Vuoi giocare di nuovo?")) {
+                    inizializzaGioco();
+                } else {
+                    alert("Il tuo profitto totale è: " + profitto);
+                }
+            }, 1000); // Ritardo di 1 secondo per mostrare la mano del banco prima di annunciare il vincitore
+        }
+
+        function mostraManoBanco() {
+            while (true) {
+                let punteggioBanco = mazzoBanco.reduce((a, b) => a + b, 0);
+
+                if (punteggioBanco >= 17) {
+                    break;
+                }
+
+                let numeroCasuale = Math.floor(Math.random() * 11) + 1;
+                mazzoBanco.push(numeroCasuale);
+                aggiornaLista('banco'); // Aggiorna la lista per mostrare il gioco del banco
+            }
+
+            aggiornaLista('banco');
+        }
+
+        function aggiornaLista(giocatore) {
+            let listaUl = giocatore === 'giocatore' ? document.getElementById("mazzoGiocatore") : document.getElementById("mazzoBanco");
+            let mazzo = giocatore === 'giocatore' ? mazzoGiocatore : mazzoBanco;
+
+            listaUl.innerHTML = "";
+
+            mazzo.forEach(function(numero) {
+                let li = document.createElement("li");
+                li.textContent = numero;
+                listaUl.appendChild(li);
+            });
+        }
+
+        // Inizializzazione del gioco
+        inizializzaGioco();
+    </script>
+
+</body>
+</html>
