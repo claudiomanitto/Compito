@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisi Numerica con Array</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Analisi Numerica con Array</h1>
+    <p>Lista generata:</p>
+    <p id="out1"></p>
+
+    <script>
+        let numeri = [];
+
+        function inserisceNumeroCasuale(i) {
+            let NumeroCasuale = Math.floor(Math.random() * 1000);
+            numeri[i] = NumeroCasuale;
+        }
+
+        for (let i = 0; i < 1000; i++) {
+            inserisceNumeroCasuale(i);
+        }
+
+        document.getElementById("out1").innerHTML = numeri.join(", ");
+    </script>
+
+</body>
+</html>
