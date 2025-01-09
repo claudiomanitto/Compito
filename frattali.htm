@@ -46,20 +46,23 @@
         }
 
         /* Stili per il box al centro */
-        .intro-box {
-            position: absolute;
-            left: 50%; /* Centra orizzontalmente */
-            background-color: #fff;
-            color: #000;
-            padding: 16px;
-            font-weight: bold;
-            text-transform: capitalize;
-            border: 1px solid #000; /* Margine sottile */
-            border-radius: 8px;
-            font-size: 14px; /* Dimensioni più piccole */
-            max-width: 250px; /* Larghezza del box più piccola */
-            text-align: center;
-        }
+      .intro-box {
+    position: fixed;
+    top: 20px; /* Posiziona il box un po' più in basso rispetto al bordo superiore */
+    left: 50%; /* Centra orizzontalmente */
+    transform: translateX(-50%); /* Centra perfettamente */
+    background-color: #fff;
+    color: #000;
+    padding: 16px;
+    font-weight: bold;
+    text-transform: capitalize;
+    border: 1px solid #000; /* Margine sottile */
+    border-radius: 8px;
+    font-size: 14px; /* Dimensioni più piccole */
+    max-width: 250px; /* Larghezza del box più piccola */
+    text-align: center;
+    z-index: 1000; /* Assicurati che il box sia sopra agli altri contenuti */
+}
     </style>
 </head>
 <body>
