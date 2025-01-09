@@ -1,0 +1,208 @@
+<!-- <em></em> si utilizza per scrivere in corsivo -->
+ <!-- <strong></strong> si utilizza per scrivere in rosso -->
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Numeri Frattali e il Frattale di Mandelbrot</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            margin: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #222;
+        }
+        .intestazione, .curiosita, .proprieta, .commento {
+            font-style: italic;
+            text-transform: lowercase;
+        }
+        h1, h2 {
+            color: #004d99;
+            margin-top: 108px; /* Abbassato il titolo per non coprirlo con il box */
+        }
+        p {
+            text-align: justify;
+        }
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 15px;
+        }
+        strong {
+            color: #cc0000;
+        }
+        .fractal-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        canvas {
+            display: block;
+            border: 2px solid black;
+        }
+
+        /* Stili per il box centrale */
+        .intro-box {
+            margin: 0 auto; /* Centra il box orizzontalmente */
+            background-color: #fff;
+            color: #000;
+            padding: 16px;
+            font-weight: bold;
+            text-transform: capitalize;
+            border: 1px solid #000; /* Margine sottile */
+            border-radius: 8px;
+            font-size: 14px; /* Dimensioni più piccole */
+            max-width: 250px; /* Larghezza del box più piccola */
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Box al centro con il testo richiesto -->
+    <div class="intro-box">
+        <p>Ricerca sui numeri frattali</p>
+        <p>Lavoro svolto da Claudio Manitto, Fabio Bruno, Samuele Campiello</p>
+    </div>
+
+    <!-- Intestazione dettagliata -->
+    <h1 class="intestazione">intestazione: introduzione ai numeri frattali</h1>
+    <p>
+        I <strong>numeri frattali</strong> sono concetti matematici complessi che descrivono strutture geometriche straordinariamente intricate.
+        Un frattale è una figura che mostra una proprietà chiamata <em>autosimilarità</em>, ovvero la capacità di apparire simile a se stessa
+        indipendentemente dalla scala di osservazione. Questa proprietà è talmente affascinante che molti matematici e artisti si sono dedicati
+        per decenni al loro studio, trovando connessioni tra la matematica pura e la natura.
+    </p>
+    <p>
+        La teoria dei frattali è stata formalizzata dal matematico Benoît B. Mandelbrot negli anni '70, anche se concetti simili erano stati
+        già esplorati da Gaston Julia e Pierre Fatou. Il termine "frattale" deriva dal latino <em>fractus</em>, che significa "frammentato" o "rotto",
+        riflettendo la struttura irregolare di queste forme.
+    </p>
+    <p>
+        I frattali non sono solo una curiosità matematica: trovano applicazioni in fisica, biologia, economia e informatica. La loro capacità di descrivere
+        strutture complesse con formule semplici è alla base della modellazione di fenomeni naturali come la formazione delle coste, delle nuvole e persino delle galassie.
+    </p>
+
+    <!-- Sezione Curiosità -->
+    <h2 class="curiosita">curiosità sui numeri frattali</h2>
+    <ul>
+        <li><strong>Natura e Frattali:</strong> I frattali si trovano in natura in molti fenomeni e strutture, come nei profili delle montagne, nei letti dei fiumi,
+            nelle foglie di felce, nelle ramificazioni degli alberi e nei fulmini. Questa presenza è dovuta al modo in cui la natura ottimizza la crescita e l'espansione
+            della materia in uno spazio tridimensionale.</li>
+        <li><strong>Arte e Frattali:</strong> I frattali sono stati usati per creare immagini artistiche digitali complesse, grazie alla loro bellezza e complessità
+            visiva. Gli artisti usano software specializzati per generare immagini frattali che sembrano paesaggi alieni o disegni psichedelici.</li>
+        <li><strong>Medicina e Frattali:</strong> La geometria frattale è usata per descrivere la struttura dei polmoni, dei vasi sanguigni e delle reti neurali,
+            dimostrando come queste strutture biologiche siano progettate per ottimizzare la superficie disponibile per scambi di ossigeno e nutrienti.</li>
+        <li><strong>Economia:</strong> In finanza, i frattali sono utilizzati per modellare l'andamento dei mercati e i comportamenti caotici delle azioni,
+            soprattutto nei modelli di Mandelbrot per la volatilità dei mercati.</li>
+        <li><strong>Informatica:</strong> I frattali sono usati nella compressione di immagini e nella generazione procedurale di ambienti nei videogiochi e nei film.</li>
+    </ul>
+
+    <!-- Sezione Frattale di Mandelbrot -->
+    <h2>Frattale di Mandelbrot</h2>
+    <p>
+        L'insieme di Mandelbrot è uno dei frattali più famosi e complessi. Viene generato iterando l'equazione complessa:  
+        \[ Z_{n+1} = Z_n^2 + C \].  
+        I punti che rimangono stabili dopo numerose iterazioni appartengono all'insieme di Mandelbrot e sono rappresentati in nero.
+    </p>
+    <p>
+        L'insieme di Mandelbrot è celebre per la sua infinita complessità: ingrandendo qualsiasi parte del bordo, si scoprono dettagli sempre nuovi e affascinanti,
+        inclusi motivi a spirale, simmetrie e figure che ricordano l'intera forma originale.
+    </p>
+    <!-- Z: È una variabile che rappresenta un numero complesso, C: È un parametro costante (anche un numero complesso) che determina il comportamento della sequenza,
+    [ Z_{n+1} = Z_n^2 + C \]: L'equazione indica che ogni valore successivo della sequenza Z si ottiene elevando Z_n al quadrato e sommando il valore costante C.-->
+
+    <!-- Canvas (disegnare grafica tramite script) per il Frattale -->
+    <div class="fractal-container">
+        <canvas id="mandelbrotCanvas"></canvas>
+    </div>
+
+    <!-- Commento -->
+    <h2 class="commento">Commento</h2>
+    <p><em>
+        <li>La forma del frattale di Mandelbrot si presenta come una sorta di "cuore" centrale, da cui si diramano rami e dettagli sempre più intricati mano a mano che ci si avvicina al bordo. </li>
+        <li>La sua natura infinita, visibile nell'eterna ripetizione di schemi simili a diverse scale, è un'espressione di come il concetto di infinito possa essere non solo astratto, ma anche visivamente tangibile. </li>
+        <li>Ogni livello di zoom svela nuove e sorprendenti variazioni, che sembrano emulare la crescita naturale di forme come nuvole, coste o piante, esemplificando una connessione profonda tra matematica e natura.</li>
+    </em></p>
+
+    <!-- Script per generare il frattale -->
+    <script>
+        // Configurazione del canvas
+        const canvas = document.getElementById("mandelbrotCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Dimensioni del canvas
+        canvas.width = 800; // larghezza
+        canvas.height = 800; // altezza
+
+        // Parametri del frattale
+        const maxIter = 100;
+        const xmin = -2.5, xmax = 1.5;
+        const ymin = -2, ymax = 2;
+        // maxIter rappresenta il numero massimo di iterazioni che il calcolo eseguirà per ogni punto del piano complesso, xmin e xmax definiscono i limiti orizzontali (asse x) del
+        // piano complesso da visualizzare nel canvas, ymin e ymax definiscono i limiti verticali (asse y) del piano complesso.
+
+        // Funzione per mappare le coordinate
+        function map(value, start1, stop1, start2, stop2) {
+            return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+            // L'intervallo originale da cui il valore proviene (ad esempio, valori compresi tra start1 e stop1).
+            // L'intervallo di destinazione a cui si desidera convertire il valore (ad esempio, valori compresi tra start2 e stop2).
+        }
+
+        // Funzione per calcolare il numero di iterazioni
+        function mandelbrot(c) {
+            let z = { re: 0, im: 0 };
+            let n = 0;
+            while (n < maxIter && (z.re * z.re + z.im * z.im) <= 4) {
+                const tempRe = z.re * z.re - z.im * z.im + c.re;
+                z.im = 2 * z.re * z.im + c.im;
+                z.re = tempRe;
+                n++;
+                // z.re: La parte reale di z (inizializzata a 0).
+                // z.im: La parte immaginaria di z (inizializzata a 0).
+                // n: Un contatore per il numero di iterazioni (inizializzato a 0).
+                // n<maxiter: Il ciclo si ferma quando il numero di iterazioni raggiunge maxIter, che rappresenta il massimo numero di iterazioni definite per il calcolo.
+                // while: contiene condizione per la quale il punto "esce" dall'insieme di Mandelbrot ma non se z rimane nel limite.
+                // temRe: memorizza parte reale.
+            }
+            return n;
+        }
+
+        // Rendering del frattale
+        function drawFractal() {
+            const imgData = ctx.createImageData(canvas.width, canvas.height);
+            for (let x = 0; x < canvas.width; x++) {
+                for (let y = 0; y < canvas.height; y++) {
+                    const cx = map(x, 0, canvas.width, xmin, xmax);
+                    const cy = map(y, 0, canvas.height, ymin, ymax);
+                    const iter = mandelbrot({ re: cx, im: cy });
+
+                    const color = iter === maxIter ? 0 : map(iter, 0, maxIter, 0, 255);
+                    const pixelIndex = (y * canvas.width + x) * 4;
+                    imgData.data[pixelIndex] = color;
+                    imgData.data[pixelIndex + 1] = color;
+                    imgData.data[pixelIndex + 2] = color;
+                    imgData.data[pixelIndex + 3] = 255;
+                    // iter: Il numero di iterazioni necessarie affinché un punto complesso "esca" dal raggio limite o raggiunga il massimo numero di iterazioni (maxIter).
+                    // imgData.data: Un array che rappresenta i dati dell'immagine per il canvas.
+                    // pixelIndex rappresenta l'indice del componente rosso del pixel, con i successivi 3 elementi che rappresentano il verde, il blu e l'alfa.
+                    // Se il punto ha raggiunto il massimo numero di iterazioni (iter === maxIter), significa che è all'interno dell'insieme di Mandelbrot. In questo caso, il colore è impostato a nero (0).
+                    // map: Traduce il valore di iter (tra 0 e maxIter) in un intervallo compreso tra 0 e 255. Questo valore rappresenta una scala di grigi (dove 0 = nero e 255 = bianco).
+                }
+            }
+            ctx.putImageData(imgData, 0, 0);
+        }
+
+        // Disegna il frattale quando la pagina è caricata
+        drawFractal();
+    </script>
+</body>
+</html>
