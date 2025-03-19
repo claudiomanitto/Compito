@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stringhe e Funzioni</title>
+    <script>
+        function calcolaLunghezza() {
+            const stringA = document.getElementById("stringA").value;
+            const stringB = document.getElementById("stringB").value;
+
+            alert(`Lunghezza di A: ${stringA.length}, Lunghezza di B: ${stringB.length}`);
+        }
+
+        function invertiStringa() {
+            const stringA = document.getElementById("stringA").value;
+            const stringB = document.getElementById("stringB").value;
+
+            alert(`Stringa A invertita: ${stringA.split('').reverse().join('')}, Stringa B invertita: ${stringB.split('').reverse().join('')}`);
+        }
+
+        function unisciStringhe() {
+            const stringA = document.getElementById("stringA").value;
+            const stringB = document.getElementById("stringB").value;
+
+            alert(`Unione delle stringhe: ${stringA + stringB}`);
+        }
+
+        function sommaLunghezze() {
+            const stringA = document.getElementById("stringA").value;
+            const stringB = document.getElementById("stringB").value;
+
+            const somma = stringA.length + stringB.length;
+            let messaggio = `Somma delle lunghezze: ${somma}`;
+
+            if (stringB.length > 20) {
+                messaggio += " - Stringa B troppo lunga";
+            }
+
+            alert(messaggio);
+        }
+    </script>
+</head>
+<body>
+    <h1>Gestione Stringhe</h1>
+    <form>
+        <label for="stringA">Stringa A:</label>
+        <input type="text" id="stringA"><br><br>
+
+        <label for="stringB">Stringa B:</label>
+        <input type="text" id="stringB"><br><br>
+
+        <button type="button" onclick="calcolaLunghezza()">Calcola Lunghezze</button>
+        <button type="button" onclick="invertiStringa()">Inverti Stringhe</button>
+        <button type="button" onclick="unisciStringhe()">Unisci Stringhe</button>
+        <button type="button" onclick="sommaLunghezze()">Somma Lunghezze</button>
+    </form>
+</body>
+</html>
