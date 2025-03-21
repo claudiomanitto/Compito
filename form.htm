@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <title>Calcolo Output</title>
+</head>
+<body>
+    <form id="calcoloForm">
+        <label for="a">Inserisci a:</label>
+        <input type="number" id="a" required><br>
+        <label for="b">Inserisci b:</label>
+        <input type="number" id="b" required><br>
+        <label for="c">Inserisci c:</label>
+        <input type="number" id="c" required><br>
+        <label for="d">Inserisci d:</label>
+        <input type="number" id="d" required><br>
+        <button type="button" onclick="calcola()">Calcola</button>
+    </form>
+    <div id="output"></div>
+
+    <script>
+        function calcola() {
+            const a = parseFloat(document.getElementById("a").value);
+            const b = parseFloat(document.getElementById("b").value);
+            const c = parseFloat(document.getElementById("c").value);
+            const d = parseFloat(document.getElementById("d").value);
+
+            const risultati = calcolaOutput(a, b, c, d);
+
+            document.getElementById("output").innerHTML = `
+                <p>Primo Output: ${risultati.primoOutput}</p>
+                <p>Secondo Output: ${risultati.secondoOutput}</p>
+            `;
+        }
+
+        function calcolaOutput(a, b, c, d) {
+            const primoRisultato = a * b + c * d;
+            const secondoRisultato = 1 / (1 + Math.exp(-primoRisultato));
+            return {
+                primoOutput: primoRisultato,
+                secondoOutput: secondoRisultato
+            };
+        }
+    </script>
+</body>
+</html>
