@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore di Numeri Casuali</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #output {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            white-space: pre-wrap;
+        }
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Generatore di Numeri Casuali</h1>
+    <button onclick="iniziaGenerazione()">Inizia Generazione</button>
+    <button onclick="fermaGenerazione()">Ferma Generazione</button>
+    <div id="output"></div>
+    <canvas id="graficoNumeri" width="400" height="200"></canvas>
+
+    <script>
+        const arrayNumeriCasuali = [];
+        const arrayRapporti = [];
+        const mediaArray = [];
+        const distanzaArray = [];
+
+        let intervalId = null;
+
+        function generaNumeroCasuale() {
+            const numeroCasuale = Math.random();
+            arrayNumeriCasuali.push(numeroCasuale);
+
+            if (arrayNumeriCasuali.length > 1) {
+                const rapporto = numeroCasuale / arrayNumeriCasuali[arrayNumeriCasuali.length - 2];
+                arrayRapporti.push(rapporto);
+            }
+
+            const metàRange = 0.5;
+            const distanza = Math.abs(numeroCasuale - metàRange);
+            distanzaArray.push(distanza);
+
+            if (arrayNumeriCasuali.length % 50 === 0) {
+                const ultimi50Numeri = arrayNumeriCasuali.slice(-50);
+                const media50 = ultimi50Numeri.reduce((acc, num) => acc + num, 0) / 50;
+                mediaArray.push(media50);
+            }
+
+            aggiornaOutput(numeroCasuale);
+            aggiornaGrafico();
+        }
+
+        function aggiornaOutput(numeroCasuale) {
+            let output = `Numero Generato: ${numeroCasuale.toFixed(4)}\n`;
+            output += `Rapporto Corrente: ${arrayRapporti[arrayRapporti.length - 1]?.toFixed(4) || "N/A"}\n`;
+            output += `Distanza dalla Metà: ${distanzaArray[distanzaArray.length - 1]?.toFixed(4) || "N/A"}\n`;
+
+            if (arrayNumeriCasuali.length % 50 === 0) {
+                const mediaCorrente = mediaArray[mediaArray.length - 1];
+                output += `<b>Media degli ultimi 50 numeri:</b> ${mediaCorrente.toFixed(4)}\n`;
+            }
+
+            document.getElementById('output').innerHTML += output + "\n";
+        }
+
+        const ctx = document.getElementById('graficoNumeri').getContext('2d');
+        const grafico = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Numeri Casuali',
+                        data: [],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.3,
+                    },
+                    {
+                        label: 'Media Ogni 50 Numeri',
+                        data: [],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        tension: 0.3,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { title: { display: true, text: 'Numero Generato' } },
+                    y: { title: { display: true, text: 'Valore' } },
+                },
+            },
+        });
+
+        function aggiornaGrafico() {
+            grafico.data.labels = Array.from({ length: arrayNumeriCasuali.length }, (_, i) => i + 1);
+            grafico.data.datasets[0].data = arrayNumeriCasuali;
+            grafico.data.datasets[1].data = mediaArray;
+            grafico.update();
+        }
+
+        function iniziaGenerazione() {
+            if (!intervalId) {
+                intervalId = setInterval(generaNumeroCasuale, 500);
+            }
+        }
+
+        function fermaGenerazione() {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+                alert("Generazione interrotta! Puoi consultare i dati registrati.");
+            }
+        }
+    </script>
+</body>
+</html>
