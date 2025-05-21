@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco riflessi colori</title>
+
+    <style>
+         #phantom{
+            width: 100%;
+            height: 300px;
+            background-color: bisque;
+            display: block;
+        }
+        #coloreVerde{
+            width: 100%;
+            height: 300px;
+            background-color: green;
+            display: none;
+        }
+        #coloreGiallo{
+            width: 100%;
+            height: 300px;
+            background-color: yellow;
+            display: none;
+        }
+        #coloreRosso{
+            width: 100%;
+            height: 300px;
+            background-color: red;
+            display: none;
+        }
+        #coloreBlu{
+            width: 100%;
+            height: 300px;
+            background-color: blue;
+            display: none;
+        }
+
+        #verdeBtn{
+            padding: 50px 50px;
+            border-radius: 50%;
+            background-color: green;
+            border: 1px solid black;
+            box-shadow: 0 9px #777;
+        }
+        #verdeBtn:active{
+            box-shadow: 0 5px #444;
+            transform: translateY(4px);
+        }
+
+        #rossoBtn{
+            padding: 50px 50px;
+            border-radius: 50%;
+            background-color: red;
+            border: 1px solid black;
+            box-shadow: 0 9px #777;
+        }
+        #rossoBtn:active{
+            box-shadow: 0 5px #444;
+            transform: translateY(4px);
+        }
+
+        #gialloBtn{
+            padding: 50px 50px;
+            border-radius: 50%;
+            background-color: yellow;
+            border: 1px solid black;
+            box-shadow: 0 9px #777;
+        }
+        #gialloBtn:active{
+            box-shadow: 0 5px #444;
+            transform: translateY(4px);
+        }
+
+        #bluBtn{
+            padding: 50px 50px;
+            border-radius: 50%;
+            background-color: blue;
+            border: 1px solid black;
+            box-shadow: 0 9px #777;
+        }
+        #bluBtn:active{
+            box-shadow: 0 5px #444;
+            transform: translateY(4px);
+        }
+    </style>
+
+</head>
+<body>
+    <h1>TESTA I TUOI RIFLESSI!</h1>
+    <p>Ogni 5 secondi apparira un colore nuovo: premi il pulsante rispettivo il più velocemente possibile</p>
+    <div id="out1"></div>
+    <div id="out2"></div>
+    <div id="out3"></div>
+
+    <div id="phantom"></div>
+    <div id="coloreVerde"></div>
+    <div id="coloreGiallo"></div>
+    <div id="coloreRosso"></div>
+    <div id="coloreBlu"></div>
+
+    <button id="verdeBtn" >VERDE</button>
+    <button id="gialloBtn" >GIALLO</button>
+    <button id="rossoBtn" >ROSSO</button>
+    <button id="bluBtn">BLU</button>
+
+    <div id="result"></div>
+    <button id="medie" onclick="calcolaMedia()">Calcola la media</button>
+
+<script>
+
+    let tempo = 0;
+    let n = Number;
+    const colori = [];
+    const tempiStabiliti = [];
+    const differences = [];
+    let nextTargetIndex = 0;
+
+
+    //arrotonda il contatore a due cifre decimali
+    function formatTimer(num) {
+        return num.toFixed(2);
+    }
+
+    //contatore
+    let contatore = setInterval(function(){
+        tempo = tempo + 0.01;
+        document.getElementById("out1").innerHTML = formatTimer(tempo);
+    }, 10);
+
+    let sfida = setInterval(function challenge(){
+        phantom.style.display = 'none';
+        n = Math.floor(Math.random()*4);
+        document.getElementById("out2").innerHTML = n;
+        colori.push(n);
+
+        if(n==0){
+            coloreVerde.style.display = 'block';
+            coloreGiallo.style.display = 'none';
+            coloreRosso.style.display = 'none';
+            coloreBlu.style.display = 'none';
+        };
+
+        if(n==1){
+            coloreVerde.style.display = 'none';
+            coloreGiallo.style.display = 'block';
+            coloreRosso.style.display = 'none';
+            coloreBlu.style.display = 'none';
+        };
+
+        if(n==2){
+            coloreVerde.style.display = 'none';
+            coloreGiallo.style.display = 'none';
+            coloreRosso.style.display = 'block';
+            coloreBlu.style.display = 'none';
+        };
+
+        if(n==3){
+            coloreVerde.style.display = 'none';
+            coloreGiallo.style.display = 'none';
+            coloreRosso.style.display = 'none';
+            coloreBlu.style.display = 'block';
+        };
+    
+        //prende il tempo ogni volta che cambia il colore
+        if (colori[colori.length-1]!==colori[colori.length-2]){
+            let tempi = parseFloat(tempo.toFixed(2));
+            tempiStabiliti.push(tempi);
+            document.getElementById("out3").innerHTML = tempiStabiliti;
+        };
+
+    }, 5000);
+
+    //registra i tempi presi e compie i vari calcoli
+    function handleColorClick(colorIndex) {
+      if (colori[colori.length - 1] === colorIndex && nextTargetIndex < tempiStabiliti.length) {
+        const targetTime = tempiStabiliti[nextTargetIndex];
+        const currentTime = parseFloat(formatTimer(tempo));
+        const difference = (currentTime - targetTime).toFixed(2);
+
+        differences.push(difference);
+        document.getElementById("result").innerHTML += `<p>Obiettivo: ${targetTime}, Tempo preso: ${currentTime}, Differenza: ${difference}</p>`;
+        nextTargetIndex++;
+      }
+    }
+
+    verdeBtn.addEventListener('click', () => handleColorClick(0));
+    gialloBtn.addEventListener('click', () => handleColorClick(1));
+    rossoBtn.addEventListener('click', () => handleColorClick(2));
+    bluBtn.addEventListener('click', () => handleColorClick(3));
+
+    //calcola la media dei risultati
+    function calcolaMedia(differences) {
+    if (differences.length === 0) return 0;
+    const somma = differences.reduce((acc, val) => acc + val, 0);
+    return somma / differences.length;
+    }
+</script>
+
+</body>
+</html>
