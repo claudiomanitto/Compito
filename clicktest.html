@@ -190,7 +190,15 @@
     rossoBtn.addEventListener('click', () => handleColorClick(2));
     bluBtn.addEventListener('click', () => handleColorClick(3));
 
-    }
+    //calcola la media dei risultati
+    function calcolaMedia() {
+    if (differences.length === 0) return;
+
+    const media = (differences.reduce((acc, val) => acc + parseFloat(val), 0) / differences.length).toFixed(2);
+    document.getElementById("result").innerHTML += `<h3>Media tempo di risposta: ${media} secondi</h3>`;
+}
+
+
 </script>
 
 </body>
